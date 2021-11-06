@@ -97,7 +97,7 @@ function Banner(props) {
 				)}
 				<Link to={`/${props.mediaType}/details/${movie?.id}`}>
 					<button class="btn btn-outline-light">
-						Details <i class="bi bi-arrow-right"></i>
+						Details <i class="bi bi-box-arrow-up-right"></i>
 					</button>
 				</Link>
 			</div>

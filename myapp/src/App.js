@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { createUseStyles } from "react-jss";
 import Routes from "./routes";
-
+import Footer from "./components/Footer";
 const styles = createUseStyles({
 	app: {
 		backgroundColor: "#111",
@@ -18,6 +18,7 @@ function App() {
 	return (
 		<div className={classes.app}>
 			<Routes />
+			<Footer />
 		</div>
 	);
 }
