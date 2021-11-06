@@ -13,6 +13,7 @@ function Movies() {
 	};
 	console.log(genres);
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		getGenres();
 	}, []);
 	return (

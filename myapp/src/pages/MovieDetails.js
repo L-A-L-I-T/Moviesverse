@@ -19,7 +19,10 @@ const styles = createUseStyles({
 	root: {
 		minHeight: "100vh",
 	},
-	fadeLeft: {},
+	fadeLeft: {
+		position: "absolute",
+		background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+	},
 	row: {},
 	"@media (max-width: 1000px)": {
 		row: {
@@ -31,37 +34,27 @@ const styles = createUseStyles({
 	},
 	"@media (min-width: 1024px)": {
 		fadeLeft: {
-			position: "absolute",
 			height: "455px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 		},
 	},
 	"@media (min-width: 1366px)": {
 		fadeLeft: {
-			position: "absolute",
 			height: "500px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 		},
 	},
 	"@media (min-width: 1920px)": {
 		fadeLeft: {
-			position: "absolute",
 			height: "650px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 		},
 	},
 	"@media (min-width: 2560px)": {
 		fadeLeft: {
-			position: "absolute",
 			height: "840px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 		},
 	},
 	"@media (min-width: 3440px)": {
 		fadeLeft: {
-			position: "absolute",
 			height: "1200px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 		},
 	},
 });
@@ -74,7 +67,6 @@ function MovieDetails() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		setLoading(true);
 		window.scrollTo(0, 0);
 		const fetchMovie = async () => {
 			setLoading(true);
@@ -120,15 +112,6 @@ function MovieDetails() {
 						{movieDetails?.release_date && (
 							<p>Release Date : {movieDetails?.release_date}</p>
 						)}
-						{/* <button type="button" class="btn btn-outline-warning">
-							Add Review
-						</button>
-						<button type="button" class="btn ms-4">
-							<i
-								class="bi bi-heart-fill"
-								style={{ fontSize: "1.5rem", color: "#e81752" }}
-							></i>
-						</button> */}
 					</div>
 					{loading ? (
 						<div className="col-7 placeholder-glow">
@@ -158,6 +141,7 @@ function MovieDetails() {
 				title="Similar Movies"
 				fetchURL={getSimilarURL("movie", movie_id)}
 				mediaType="movie"
+				showTotal
 			/>
 			<Section
 				title="Recommended Movies"

@@ -17,6 +17,7 @@ function TV() {
 		setGenres(request.data.genres);
 	};
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		getGenres();
 	}, []);
 	console.log(genres);

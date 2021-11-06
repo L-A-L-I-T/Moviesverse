@@ -24,6 +24,11 @@ const styles = createUseStyles({
 			display: "none",
 		},
 	},
+	"@media (max-width: 768px)": {
+		posterImg: {
+			height: "180px",
+		},
+	},
 });
 
 function Images(props) {
@@ -46,9 +51,12 @@ function Images(props) {
 	}, [props.season_id, props.id, props.mediaType]);
 	return (
 		<div>
-			<h3 className="ms-4">{props.season_id ? "Posters" : "Images"}</h3>
+			<h3 className="ms-4">
+				{props.season_id ? "Posters" : "Images"} ({images?.length})
+			</h3>
 			<div className={classes.rowImages}>
-				{!loading && images?.length > 0 ? (
+				{!loading &&
+					images?.length > 0 &&
 					images?.map((image, index) => {
 						return (
 							<img
@@ -58,10 +66,7 @@ function Images(props) {
 								id={image.file_path}
 							/>
 						);
-					})
-				) : (
-					<div>{props.season_id ? "No Posters" : "No Images"}</div>
-				)}
+					})}
 			</div>
 		</div>
 	);

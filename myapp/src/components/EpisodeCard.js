@@ -4,8 +4,10 @@ import { getImageBaseURL } from "../requests";
 
 const styles = createUseStyles({
 	img: {
-		objectFit: "contain",
+		objectFit: "cover",
+		width: "100%",
 		borderRadius: "5px",
+		minHeight: "250px",
 	},
 	noImg: {
 		height: "240px",
@@ -28,18 +30,28 @@ const styles = createUseStyles({
 		},
 	},
 	"@media (min-width: 100px)": {
-		img: {
-			height: "220px",
-			marginBottom: "10px",
-		},
+		img: { minHeight: "180px", marginBottom: "10px" },
 		imgContainer: {
-			justifyContent: "start",
+			justifyContent: "center",
 		},
 		noImg: {
-			height: "220px",
-			width: "390px",
+			height: "180px",
+			width: "350px",
 		},
 	},
+	"@media (max-width: 414px)": {
+		noImg: {
+			height: "200px",
+			width: "360px",
+		},
+	},
+	"@media (max-width: 320px)": {
+		noImg: {
+			height: "150px",
+			width: "320px",
+		},
+	},
+
 	"@media (min-width: 1200px)": {
 		img: {
 			height: "240px",
@@ -81,8 +93,8 @@ const styles = createUseStyles({
 function EpisodeCard(props) {
 	const classes = styles();
 	return (
-		<div class="row my-5 ">
-			<div className={`col-lg-5 ${classes.imgContainer}`}>
+		<div class="row my-5 justify-content-center">
+			<div className={`col-lg-4  col-md-5 ${classes.imgContainer}`}>
 				{props.episode.still_path ? (
 					<img
 						className={classes.img}
@@ -94,7 +106,7 @@ function EpisodeCard(props) {
 				)}
 			</div>
 			<div
-				className={`col-lg-7 px-3 d-flex-col justify-content-start align-items-center ${classes.content}`}
+				className={`col-lg-8 px-3 d-flex-col justify-content-start align-items-center ${classes.content}`}
 			>
 				<h4>
 					{props.episode.episode_number}. {props.episode.name}

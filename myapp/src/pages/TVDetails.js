@@ -22,19 +22,10 @@ const styles = createUseStyles({
 		minHeight: "100vh",
 	},
 	row: {},
-	fadeLeft: {},
-	"@media (max-width: 1000px)": {
-		row: {
-			flexDirection: "column-reverse",
-		},
+	loadingImg: {
+		height: "455px",
 	},
-	"@media (min-width: 1000px)": {
-		fadeLeft: {
-			height: "455px",
-			position: "absolute",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
-		},
-	},
+	parentImg: {},
 	noImg: {
 		width: "100%",
 		height: "455px",
@@ -43,42 +34,70 @@ const styles = createUseStyles({
 		alignItems: "center",
 		backgroundColor: "#202020",
 	},
-	loadingImg: {
-		height: "455px",
+	fadeLeft: {
+		position: "absolute",
+		background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 	},
+	"@media (min-width: 100px)": {
+		loadingImg: {
+			height: "220px",
+		},
+		noImg: {
+			height: "220px",
+		},
+	},
+	"@media (max-width: 1000px)": {
+		row: {
+			flexDirection: "column-reverse",
+		},
+	},
+	"@media (min-width: 1000px)": {
+		fadeLeft: {
+			height: "455px",
+		},
+		loadingImg: {
+			height: "455px",
+		},
+	},
+
 	"@media (min-width: 1024px)": {
 		fadeLeft: {
-			position: "absolute",
-			height: "455px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+			height: "420px",
+		},
+		loadingImg: {
+			height: "350px",
 		},
 	},
 	"@media (min-width: 1366px)": {
 		fadeLeft: {
-			position: "absolute",
+			height: "520px",
+		},
+		loadingImg: {
 			height: "500px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 		},
 	},
 	"@media (min-width: 1920px)": {
 		fadeLeft: {
-			position: "absolute",
 			height: "650px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+		loadingImg: {
+			height: "640px",
 		},
 	},
 	"@media (min-width: 2560px)": {
 		fadeLeft: {
-			position: "absolute",
 			height: "840px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+		loadingImg: {
+			height: "830px",
 		},
 	},
 	"@media (min-width: 3440px)": {
 		fadeLeft: {
-			position: "absolute",
 			height: "1200px",
-			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+		loadingImg: {
+			height: "1180px",
 		},
 	},
 });
@@ -110,6 +129,7 @@ function TVDetails() {
 		setSeason(1);
 		window.scrollTo(0, 0);
 		const fetchMovie = async () => {
+			setLoading(true);
 			let fetchURL = getDetailsURL("tv", tv_id);
 			console.log(fetchURL);
 			let request = await axios.get(fetchURL);
@@ -195,18 +215,8 @@ function TVDetails() {
 						<p class="mt-4">
 							{truncate(seasonDetails?.overview || tvDetails?.overview, 400)}
 						</p>
-
-						{/* <button type="button" class="btn btn-outline-warning">
-							Add Review
-						</button>
-						<button type="button" class="btn ms-4">
-							<i
-								class="bi bi-heart-fill"
-								style={{ fontSize: "1.5rem", color: "#e81752" }}
-							></i>
-						</button> */}
 					</div>
-					<div className="col-lg-7">
+					<div className={`col-lg-7 ${classes.parentImg}`}>
 						{loading ? (
 							<LoadingImg />
 						) : (

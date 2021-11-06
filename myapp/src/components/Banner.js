@@ -56,7 +56,16 @@ function Banner(props) {
 		fetchData();
 	}, []);
 	console.log(movie);
+	const [windowSize, setWindowSize] = useState(null);
+	useEffect(() => {
+		const handleResize = () => {
+			setWindowSize(window.innerWidth);
+		};
 
+		window.addEventListener("resize", handleResize);
+
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 	function truncate(str, n) {
 		return str?.length > n ? str.substr(0, n - 1) + "..." : str;
 	}
@@ -71,17 +80,25 @@ function Banner(props) {
 			}}
 		>
 			<div className={classes.bannerContent}>
-				<h1 className={classes.bannerTitle}>
+				<h1 className={`${classes.bannerTitle} text-white`}>
 					{movie?.title ||
 						movie?.name ||
 						movie?.original_name ||
 						movie?.original_title}
 				</h1>
-				<h1 className={classes.bannerDescription}>
-					{truncate(movie?.overview, 150)}
-				</h1>
+				{windowSize > 500 ? (
+					<h1 className={classes.bannerDescription}>
+						{truncate(movie?.overview, 150)}
+					</h1>
+				) : (
+					<h1 className={classes.bannerDescription}>
+						{truncate(movie?.overview, 100)}
+					</h1>
+				)}
 				<Link to={`/${props.mediaType}/details/${movie?.id}`}>
-					<button class="btn btn-outline-light">Details</button>
+					<button class="btn btn-outline-light">
+						Details <i class="bi bi-arrow-right"></i>
+					</button>
 				</Link>
 			</div>
 			<div className={classes.bannerFadeBottom}></div>

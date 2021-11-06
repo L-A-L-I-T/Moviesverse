@@ -16,6 +16,14 @@ const styles = createUseStyles({
 		borderRadius: "10px",
 		objectFit: "cover",
 	},
+	cont: {
+		flexDirection: "row",
+	},
+	"@media (max-width: 1000px)": {
+		cont: {
+			flexDirection: "column-reverse",
+		},
+	},
 });
 
 function Person() {
@@ -36,14 +44,14 @@ function Person() {
 		<div className={classes.root}>
 			<Navbar />
 			<div className="container">
-				<div className="row mt-5">
-					<div className="col-lg-7">
+				<div className={`row mt-3 ${classes.cont}`}>
+					<div className="col-lg-7 px-4">
 						<h3>{person?.name}</h3>
 						<p>{person?.biography}</p>
 						<p>Date of Birth : {person?.birthday}</p>
 						<p>Place of Birth : {person?.place_of_birth}</p>
 					</div>
-					<div className="col-lg-5 d-flex justify-content-center align-items-start mt-4">
+					<div className="col-lg-5 mb-5 d-flex justify-content-center align-items-start">
 						<img
 							className={classes.profilePhoto}
 							src={getImageBaseURL(person?.profile_path)}

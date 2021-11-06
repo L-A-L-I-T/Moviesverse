@@ -21,14 +21,6 @@ const styles = createUseStyles({
 	},
 });
 
-const opts = {
-	height: "250",
-	width: "470",
-	playerVars: {
-		autoplay: 0,
-	},
-};
-
 function Videos(props) {
 	const classes = styles();
 	const [videos, setVideos] = useState();
@@ -49,6 +41,25 @@ function Videos(props) {
 	useEffect(() => {
 		fetchVideos();
 	}, [props.season_id, props.id]);
+	const [windowSize, setWindowSize] = useState(null);
+	useEffect(() => {
+		const handleResize = () => {
+			setWindowSize(window.innerWidth);
+		};
+
+		window.addEventListener("resize", handleResize);
+
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
+	const opts = {
+		height: windowSize < 769 ? "220" : "250",
+		width: windowSize < 769 ? "320" : "470",
+		playerVars: {
+			autoplay: 0,
+		},
+	};
+
 	return (
 		<div>
 			<h3 className="ms-4 mt-3">Videos ({videos?.length})</h3>
