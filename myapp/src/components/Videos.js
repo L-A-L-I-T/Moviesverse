@@ -9,7 +9,7 @@ const styles = createUseStyles({
 		display: "flex",
 		flexDirection: "row",
 		alignItems: "flexStart",
-		padding: "20px",
+		margin: "20px",
 		overflowY: "hidden",
 		overflowX: "scroll",
 		"&::-webkit-scrollbar": {
@@ -23,7 +23,7 @@ const styles = createUseStyles({
 
 const opts = {
 	height: "250",
-	width: "500",
+	width: "470",
 	playerVars: {
 		autoplay: 0,
 	},
@@ -51,7 +51,7 @@ function Videos(props) {
 	}, [props.season_id, props.id]);
 	return (
 		<div>
-			<h3 className="ms-4">Videos</h3>
+			<h3 className="ms-4 mt-3">Videos ({videos?.length})</h3>
 			<div className={classes.rowVideos}>
 				{!loading &&
 					videos.map((video, index) => {

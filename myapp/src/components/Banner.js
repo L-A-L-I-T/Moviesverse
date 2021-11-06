@@ -8,7 +8,6 @@ import { fetchTrending, getImageBaseURL } from "../requests";
 const styles = createUseStyles({
 	banner: {
 		color: "white",
-		objectFit: "contain",
 		height: "450px",
 		marginBottom: "20px",
 	},
@@ -66,9 +65,9 @@ function Banner(props) {
 		<header
 			className={classes.banner}
 			style={{
-				backgoundSize: "contain",
+				backgroundSize: "cover",
 				backgroundImage: `url(${getImageBaseURL(movie?.backdrop_path)})`,
-				backgroundPosition: "center center",
+				backgroundPosition: "center top",
 			}}
 		>
 			<div className={classes.bannerContent}>

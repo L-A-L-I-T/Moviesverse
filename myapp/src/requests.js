@@ -1,6 +1,7 @@
-const API_KEY = "a8ffeefc19d4f3570a85c44c72079881";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const getGenresURL = (media_type) => {
+	console.log(API_KEY);
 	return `/genre/${media_type}/list?api_key=${API_KEY}&language=en-US`;
 };
 

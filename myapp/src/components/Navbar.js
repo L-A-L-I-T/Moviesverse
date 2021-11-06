@@ -47,7 +47,7 @@ function Navbar(props) {
 									class="nav-link active"
 									aria-current="tv"
 								>
-									TV
+									TV Shows
 								</a>
 							</Link>
 						</li>

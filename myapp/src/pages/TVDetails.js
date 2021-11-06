@@ -21,10 +21,11 @@ const styles = createUseStyles({
 	root: {
 		minHeight: "100vh",
 	},
+	row: {},
 	fadeLeft: {},
 	"@media (max-width: 1000px)": {
 		row: {
-			flexDirection: "columnReverse",
+			flexDirection: "column-reverse",
 		},
 	},
 	"@media (min-width: 1000px)": {
@@ -34,9 +35,51 @@ const styles = createUseStyles({
 			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 		},
 	},
-	loadingImg: {
+	noImg: {
 		width: "100%",
 		height: "455px",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "#202020",
+	},
+	loadingImg: {
+		height: "455px",
+	},
+	"@media (min-width: 1024px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "455px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+	},
+	"@media (min-width: 1366px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "500px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+	},
+	"@media (min-width: 1920px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "650px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+	},
+	"@media (min-width: 2560px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "840px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+	},
+	"@media (min-width: 3440px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "1200px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
 	},
 });
 
@@ -53,31 +96,49 @@ function TVDetails() {
 	const [seasonDetails, setSeasonDetails] = useState();
 	const [loading, setLoading] = useState(true);
 
-	const fetchMovie = async () => {
-		let fetchURL = getDetailsURL("tv", tv_id);
-		console.log(fetchURL);
-		let request = await axios.get(fetchURL);
-		console.log(request);
-		setTvDetails(request.data);
-	};
-	const fetchSeasonDetails = async () => {
-		let fetchURL = getSeasonURL(tv_id, season);
-		let request = await axios.get(fetchURL);
-		console.log(request);
-		setSeasonDetails(request.data);
+	const LoadingImg = () => {
+		return (
+			<div className={`col-lg-12 placeholder-wave`}>
+				<div
+					className={`${classes.loadingImg} placeholder col-12 bg-dark`}
+				></div>
+			</div>
+		);
 	};
 
 	useEffect(() => {
+		setSeason(1);
 		window.scrollTo(0, 0);
+		const fetchMovie = async () => {
+			let fetchURL = getDetailsURL("tv", tv_id);
+			console.log(fetchURL);
+			let request = await axios.get(fetchURL);
+			console.log(request);
+			setTvDetails(request.data);
+		};
+		const fetchSeasonDetails = async () => {
+			let fetchURL = getSeasonURL(tv_id, season);
+			let request = await axios.get(fetchURL);
+			console.log(request);
+			setSeasonDetails(request.data);
+			setLoading(false);
+		};
 		fetchMovie();
 		fetchSeasonDetails();
-		setLoading(false);
 	}, [tv_id]);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
+		const fetchSeasonDetails = async () => {
+			setLoading(true);
+			let fetchURL = getSeasonURL(tv_id, season);
+			let request = await axios.get(fetchURL);
+			console.log(request);
+			setSeasonDetails(request.data);
+			setLoading(false);
+		};
 		fetchSeasonDetails();
-	}, [season, tv_id]);
+	}, [season]);
 
 	return (
 		<div className={classes.root}>
@@ -101,7 +162,6 @@ function TVDetails() {
 								{tvDetails?.number_of_episodes}
 							</span>
 						</p>
-
 						<div class="dropdown">
 							<button
 								class="btn btn-outline-warning dropdown-toggle"
@@ -147,24 +207,33 @@ function TVDetails() {
 						</button> */}
 					</div>
 					<div className="col-lg-7">
-						{seasonDetails?.episodes?.length > 0 ? (
-							<>
-								<div className={`${classes.fadeLeft} col-6`}></div>
-								<img
-									width="100%"
-									height="450px"
-									src={getImageBaseURL(
-										seasonDetails?.episodes[0]?.still_path ||
-											seasonDetails?.poster_path
-									)}
-									alt={tvDetails?.name}
-								/>
-							</>
+						{loading ? (
+							<LoadingImg />
 						) : (
-							<div
-								class={`placeholder-glow bg-dark ${classes.loadingImg}`}
-								aria-hidden="true"
-							></div>
+							seasonDetails?.episodes?.length > 0 &&
+							(seasonDetails.episodes[0].still_path ||
+							seasonDetails.poster_path ? (
+								<>
+									<div className={`${classes.fadeLeft} col-6`}></div>
+									<img
+										width="100%"
+										src={getImageBaseURL(
+											seasonDetails?.episodes[0]?.still_path ||
+												seasonDetails?.poster_path
+										)}
+										alt={tvDetails?.name}
+									/>
+								</>
+							) : (
+								<div class={`${classes.noImg}`} aria-hidden="true">
+									<h1>
+										{tvDetails?.name ||
+											tvDetails?.title ||
+											tvDetails?.original_name ||
+											tvDetails?.original_title}
+									</h1>
+								</div>
+							))
 						)}
 					</div>
 				</div>
@@ -184,11 +253,13 @@ function TVDetails() {
 				title="Similar Shows"
 				fetchURL={getSimilarURL("tv", tv_id)}
 				mediaType="tv"
+				showTotal
 			/>
 			<Section
 				title="Recommended Shows"
 				fetchURL={getRecommendedURL("tv", tv_id)}
 				mediaType="tv"
+				showTotal
 			/>
 		</div>
 	);

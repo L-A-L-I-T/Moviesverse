@@ -55,8 +55,8 @@ function Cast(props) {
 		fetchCredits();
 	}, [props.season_id, props.id]);
 	return (
-		<div className="ms-4">
-			<h4>Cast</h4>
+		<div>
+			<h4 className="ms-4">Cast</h4>
 			<div className={`${classes.rowImages}`}>
 				{credits?.length > 0 ? (
 					credits.map((credit, index) => {
@@ -77,14 +77,21 @@ function Cast(props) {
 										/>
 									) : (
 										<div
-											class={`placeholder-glow bg-dark ${classes.loadingImg}`}
+											class={`placeholder-glow bg-dark d-flex  justify-content-center align-items-center ${classes.loadingImg}`}
 											aria-hidden="true"
-										></div>
+										>
+											{credit?.original_name}
+										</div>
 									)}
 									<h5 className="mt-3">{credit?.original_name}</h5>
-									<p className="mt-2">
+									<p className="mt-2 text-warning">
+										(
 										{credit.character ||
-											(credit.roles && credit.roles[0].character)}
+										(credit.roles && credit.roles[0].character)
+											? credit.character ||
+											  (credit.roles && credit.roles[0].character)
+											: " - "}
+										)
 									</p>
 								</div>
 							</Link>

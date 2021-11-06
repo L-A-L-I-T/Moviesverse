@@ -26,10 +26,41 @@ const styles = createUseStyles({
 			flexDirection: "column-reverse",
 		},
 	},
-	"@media (min-width: 1000px)": {
+	placeHolder: {
+		height: "500px",
+	},
+	"@media (min-width: 1024px)": {
 		fadeLeft: {
-			height: "456px",
 			position: "absolute",
+			height: "455px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+	},
+	"@media (min-width: 1366px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "500px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+	},
+	"@media (min-width: 1920px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "650px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+	},
+	"@media (min-width: 2560px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "840px",
+			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
+		},
+	},
+	"@media (min-width: 3440px)": {
+		fadeLeft: {
+			position: "absolute",
+			height: "1200px",
 			background: "-webkit-linear-gradient(right,rgba(0,0,0,0) 80%,#111 100%)",
 		},
 	},
@@ -42,17 +73,18 @@ function MovieDetails() {
 	const [movieDetails, setMovieDetails] = useState();
 	const [loading, setLoading] = useState(true);
 
-	const fetchMovie = async () => {
-		let fetchURL = getDetailsURL("movie", movie_id);
-		console.log(fetchURL);
-		let request = await axios.get(fetchURL);
-		setMovieDetails(request.data);
-	};
-
 	useEffect(() => {
+		setLoading(true);
 		window.scrollTo(0, 0);
+		const fetchMovie = async () => {
+			setLoading(true);
+			let fetchURL = getDetailsURL("movie", movie_id);
+			console.log(fetchURL);
+			let request = await axios.get(fetchURL);
+			setMovieDetails(request.data);
+			setLoading(false);
+		};
 		fetchMovie();
-		setLoading(false);
 	}, [movie_id]);
 
 	console.log(movieDetails);
@@ -98,22 +130,30 @@ function MovieDetails() {
 							></i>
 						</button> */}
 					</div>
-					{movieDetails?.backdrop_path && (
-						<div className="col-lg-7">
-							<div className={`${classes.fadeLeft} col-6`}></div>
-							<img
-								width="100%"
-								src={getImageBaseURL(movieDetails?.backdrop_path)}
-								alt={movieDetails?.name}
-							/>
+					{loading ? (
+						<div className="col-7 placeholder-glow">
+							<div
+								className={`placeholder col-12 bg-dark ${classes.placeHolder}`}
+							></div>
 						</div>
+					) : (
+						movieDetails?.backdrop_path && (
+							<div className={`col-lg-7`}>
+								<div className={`${classes.fadeLeft} col-6`}></div>
+								<img
+									width="100%"
+									src={getImageBaseURL(movieDetails?.backdrop_path)}
+									alt={movieDetails?.name}
+								/>
+							</div>
+						)
 					)}
 				</div>
 			</div>
 			<Images mediaType="movie" id={movie_id} />
-			<Cast id={movie_id} mediaType="movie" />
 			<Videos mediaType="movie" id={movie_id} />
 			<Review mediaType="movie" id={movie_id} />
+			<Cast id={movie_id} mediaType="movie" />
 			<Section
 				title="Similar Movies"
 				fetchURL={getSimilarURL("movie", movie_id)}
@@ -123,6 +163,7 @@ function MovieDetails() {
 				title="Recommended Movies"
 				fetchURL={getRecommendedURL("movie", movie_id)}
 				mediaType="movie"
+				showTotal
 			/>
 		</div>
 	);

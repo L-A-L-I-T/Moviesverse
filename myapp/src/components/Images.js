@@ -5,7 +5,7 @@ import { getImageURL, getImageBaseURL, getSeasonImageURL } from "../requests";
 
 const styles = createUseStyles({
 	posterImg: {
-		height: "250px",
+		height: "230px",
 		marginRight: "20px",
 		borderRadius: "5px",
 		transition: "transform 470ms",
@@ -30,22 +30,23 @@ function Images(props) {
 	const classes = styles();
 	const [images, setImages] = useState();
 	const [loading, setLoading] = useState(true);
-	const fetchImages = async () => {
-		let fetchURL = props.season_id
-			? getSeasonImageURL(props.id, props.season_id)
-			: getImageURL(props.mediaType, props.id);
-		let request = await axios.get(fetchURL);
-		setImages(
-			request.data.backdrops || request.data.profiles || request.data.posters
-		);
-	};
+
 	useEffect(() => {
+		const fetchImages = async () => {
+			let fetchURL = props.season_id
+				? getSeasonImageURL(props.id, props.season_id)
+				: getImageURL(props.mediaType, props.id);
+			let request = await axios.get(fetchURL);
+			setImages(
+				request.data.backdrops || request.data.profiles || request.data.posters
+			);
+		};
 		fetchImages();
 		setLoading(false);
-	}, [props.season_id, props.id]);
+	}, [props.season_id, props.id, props.mediaType]);
 	return (
-		<div className="ms-4">
-			<h3>{props.season_id ? "Posters" : "Images"}</h3>
+		<div>
+			<h3 className="ms-4">{props.season_id ? "Posters" : "Images"}</h3>
 			<div className={classes.rowImages}>
 				{!loading && images?.length > 0 ? (
 					images?.map((image, index) => {
@@ -54,6 +55,7 @@ function Images(props) {
 								className={classes.posterImg}
 								src={getImageBaseURL(image.file_path)}
 								alt="img"
+								id={image.file_path}
 							/>
 						);
 					})

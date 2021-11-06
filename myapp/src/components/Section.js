@@ -36,6 +36,12 @@ const styles = createUseStyles({
 			transform: "scale(1.1)",
 		},
 	},
+	loadingPoster: {
+		minWidth: "170px",
+		height: "250px",
+		borderRadius: "5px",
+		marginRight: "15px",
+	},
 });
 
 function Section(props) {
@@ -54,30 +60,43 @@ function Section(props) {
 
 	return (
 		<div>
-			<h2 className={classes.title}>{props.title}</h2>
-			<div className={classes.rowPosters}>
-				{titles.map((title, index) => {
-					return loading ? (
-						<div></div>
-					) : (
-						<Link
-							to={{
-								pathname: `/${props.mediaType}/details/${title.id}`,
-								state: {
-									title: title,
-								},
-							}}
-							id={title.id}
-						>
-							<img
-								className={classes.poster}
-								alt={title.name}
-								src={`${getImageBaseURL(title.poster_path)}`}
-							/>
-						</Link>
-					);
-				})}
-			</div>
+			<h2 className={classes.title}>
+				{props.title}
+				{props.showTotal && ` (${titles?.length})`}
+			</h2>
+			{loading ? (
+				<div className={classes.rowPosters}>
+					{[...Array(15)].map(() => {
+						return (
+							<div
+								className={`${classes.loadingPoster} placeholder-wave bg-dark`}
+							></div>
+						);
+					})}
+				</div>
+			) : (
+				<div className={classes.rowPosters}>
+					{titles.map((title, index) => {
+						return (
+							<Link
+								to={{
+									pathname: `/${props.mediaType}/details/${title.id}`,
+									state: {
+										title: title,
+									},
+								}}
+								id={title.id}
+							>
+								<img
+									className={classes.poster}
+									alt={title.name}
+									src={`${getImageBaseURL(title.poster_path)}`}
+								/>
+							</Link>
+						);
+					})}
+				</div>
+			)}
 		</div>
 	);
 }

@@ -24,9 +24,9 @@ function Review(props) {
 	console.log(reviews);
 
 	return (
-		<div className="ms-4">
-			<h3>Reviews({reviews?.length})</h3>
-			{reviews?.length > 0 ? (
+		<div className="ms-4 mb-5">
+			<h3>Reviews ({reviews?.length})</h3>
+			{reviews?.length > 0 && (
 				<>
 					<div
 						id="carouselExampleControls"
@@ -48,7 +48,6 @@ function Review(props) {
 														class="col-8 py-5 align-items-center"
 														style={{
 															textAlign: "center",
-															height: "250px",
 															color: "white",
 														}}
 													>
@@ -88,8 +87,6 @@ function Review(props) {
 						</button>
 					</div>
 				</>
-			) : (
-				<div class="ms-4">No Reviews</div>
 			)}
 		</div>
 	);
