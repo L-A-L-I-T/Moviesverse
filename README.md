@@ -1,7 +1,7 @@
 
 # Moviesverse
 
-A Website for getting all the information about your favourite Movies and TV Shows.
+A Website for getting all the information about your favourite Movies, TV Shows and Actors.
 
 
 ## Tech Stack
@@ -30,9 +30,13 @@ Search
 
 ![](./demo/search.gif)
 
+## Instructions 
 
+- You can see Movies and TV Shows listed according to the genres.
 
+- You can scrool through the list of different movies and tv shows by ```Shift + mouse scroll``` or you can use your touchpad gestures.
 
+- You can search for the *Movies*, *TV Shows*, or *Actors* through the search bar present at the top.
 
 
 
