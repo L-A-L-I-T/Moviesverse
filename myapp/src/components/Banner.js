@@ -39,6 +39,13 @@ const styles = createUseStyles({
 			paddingRight: "1rem",
 		},
 	},
+	"@media (min-width: 2000px)": {
+		banner: {
+			height: "700px",
+		},
+
+		bannerFadeBottom: { height: "700px" },
+	},
 });
 
 function Banner(props) {
