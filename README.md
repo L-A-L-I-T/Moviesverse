@@ -14,8 +14,24 @@ A Website for getting all the information about your favourite Movies and TV Sho
 
 
 ## Demo
+Movies and TV Shows arranged by genres.
 
 ![](./demo/genres.gif)
+
+Movie Details
+
+![](./demo/movieDetails.gif)
+
+TV Show Details
+
+![](./demo/tvDetails.gif)
+
+Search
+
+![](./demo/search.gif)
+
+
+
 
 
 
