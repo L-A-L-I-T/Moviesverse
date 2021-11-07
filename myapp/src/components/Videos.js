@@ -25,22 +25,23 @@ function Videos(props) {
 	const classes = styles();
 	const [videos, setVideos] = useState();
 	const [loading, setLoading] = useState(true);
-	const fetchVideos = async () => {
-		let fetchURL = props.season_id
-			? getSeasonVideoURL(props.id, props.season_id)
-			: getVidoesURL(props.mediaType, props.id);
-		let request = await axios.get(fetchURL);
-		console.log(request);
-		if (request.data.results.length === 0) {
-			fetchURL = getVidoesURL(props.mediaType, props.id);
-			request = await axios.get(fetchURL);
-		}
-		setVideos(request.data.results);
-		setLoading(false);
-	};
+
 	useEffect(() => {
+		const fetchVideos = async () => {
+			let fetchURL = props.season_id
+				? getSeasonVideoURL(props.id, props.season_id)
+				: getVidoesURL(props.mediaType, props.id);
+			let request = await axios.get(fetchURL);
+			console.log(request);
+			if (request.data.results.length === 0) {
+				fetchURL = getVidoesURL(props.mediaType, props.id);
+				request = await axios.get(fetchURL);
+			}
+			setVideos(request.data.results);
+			setLoading(false);
+		};
 		fetchVideos();
-	}, [props.season_id, props.id]);
+	}, [props.season_id, props.id, props.mediaType]);
 	const [windowSize, setWindowSize] = useState(null);
 	useEffect(() => {
 		const handleResize = () => {
@@ -59,6 +60,14 @@ function Videos(props) {
 			autoplay: 0,
 		},
 	};
+
+	// const opts = {
+	// 	height: "250",
+	// 	width: "470",
+	// 	playerVars: {
+	// 		autoplay: 0,
+	// 	},
+	// };
 
 	return (
 		<div>

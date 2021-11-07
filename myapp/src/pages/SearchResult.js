@@ -94,7 +94,11 @@ function SearchResult() {
 														result?.original_title}
 												</h4>
 												<p className={`${classes.caption} `}>
-													( {result.media_type} )
+													({" "}
+													{(result.media_type === "movie" && "Movie") ||
+														(result.media_type === "tv" && "TV Show") ||
+														(result.media_type === "person" && "Person")}
+													)
 												</p>
 											</div>
 										</Link>

@@ -63,7 +63,7 @@ function Navbar(props) {
 						/>
 						<Link to={{ pathname: `/search_results`, state: searchInput }}>
 							<button
-								class="btn btn-outline-warning my-2"
+								class="btn btn-outline-warning my-2 me-4"
 								type="submit"
 								style={{ borderRadius: "5px" }}
 							>
