@@ -1,7 +1,7 @@
 
 # Moviesverse
 
-A Website for getting all the information about your favourite Movies, TV Shows and Actors.
+A Website for getting all the information about your favourite Movies, TV Shows and Actors.  [Live Website](https://moviesverse.netlify.app/movies)
 
 
 ## Tech Stack
